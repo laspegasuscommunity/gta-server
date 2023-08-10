@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  #Это конфигурация Docker Compose для игрового сервера Grand Theft Auto V.
+  gta-server:
+    container_name: gta-server
+    env_file: gta.env
+    image: spritsail/fivem:latest
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      traefik.enable: "true"
+      traefik.http.routers.gta-server.entrypoints: "websecure"
+      traefik.http.routers.gta-server.rule: "Host(`gta.${DOMAIN}`)"
+      traefik.http.routers.gta-server.service: "gta-server"
+      traefik.http.routers.gta-server.tls.certresolver: "letsencrypt"
+      traefik.http.services.gta-server.loadbalancer.server.port: "40120"
+    ports:
+      - "30120:30120"
+      - "30120:30120/udp"
+    volumes:
+      - "./gta/config:/config"
+      - "./gta/txData:/txData"
+
+networks:
+  default:
+    external: true
+    name: $NETWORK
