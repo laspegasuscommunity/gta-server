@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  #Это конфигурация Docker Compose для игрового сервера Grand Theft Auto V.
+  #Это конфигурация Docker Compose для игрового сервера Grand Theft Auto V (FiveM).
   gta-server:
     container_name: gta-server
     env_file: gta.env
