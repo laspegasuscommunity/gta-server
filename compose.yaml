@@ -4,13 +4,17 @@ services:
   #Это конфигурация Docker Compose для игрового сервера Grand Theft Auto V (FiveM).
   gta-server:
     container_name: gta-server
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
     env_file: gta.env
     image: spritsail/fivem:latest
     labels:
       com.centurylinklabs.watchtower.enable: "true"
       traefik.enable: "true"
       traefik.http.routers.gta-server.entrypoints: "websecure"
-      traefik.http.routers.gta-server.rule: "Host(`gta.${DOMAIN}`)"
+      traefik.http.routers.gta-server.rule: "Host(`gtav.${DOMAIN}`)"
       traefik.http.routers.gta-server.service: "gta-server"
       traefik.http.routers.gta-server.tls.certresolver: "letsencrypt"
       traefik.http.services.gta-server.loadbalancer.server.port: "40120"
